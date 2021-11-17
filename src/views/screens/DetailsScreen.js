@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {
   ImageBackground,
@@ -9,20 +10,29 @@ import {
   Image,
   Dimensions,
   ScrollView,
+  Pressable,
 } from 'react-native';
+import { useDispatch } from 'react-redux';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import COLORS from '../../consts/colors';
-const {width} = Dimensions.get('screen');
-const DetailsScreen = ({navigation, route}) => {
+import { removeHouse } from '../../store/houseSlice';
+const { width } = Dimensions.get('screen');
+const DetailsScreen = ({ navigation, route }) => {
   const house = route.params;
-
-  const InteriorCard = ({interior}) => {
+  console.log('houseDetal', house);
+  const dispatch = useDispatch();
+  const InteriorCard = ({ interior }) => {
     return <Image source={interior} style={style.interiorImage} />;
   };
-
+  const handleDelete = id => {
+    const action = removeHouse(id);
+    console.log('action', action);
+    dispatch(removeHouse(action));
+    navigation.goBack();
+  };
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* House image */}
 
@@ -37,79 +47,83 @@ const DetailsScreen = ({navigation, route}) => {
                 />
               </View>
               <View style={style.headerBtn}>
-                <Icon name="favorite" size={20} color={COLORS.red} />
+                <Pressable onPress={() => handleDelete(house.id)}>
+                  <Icon name="delete" size={20} color={COLORS.red} />
+                </Pressable>
               </View>
             </View>
           </ImageBackground>
-
-          {/* Virtual Tag View */}
-          <View style={style.virtualTag}>
-            <Text style={{color: COLORS.white}}>Virtual tour</Text>
-          </View>
         </View>
 
         <View style={style.detailsContainer}>
           {/* Name and rating view container */}
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text style={{fontSize: 20, fontWeight: 'bold'}}>
-              {house.title}
+          <View
+            style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+            <Text style={{ fontSize: 20, fontWeight: 'bold' }}>
+              {house.propertyName}
             </Text>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <View style={style.ratingTag}>
-                <Text style={{color: COLORS.white}}>4.8</Text>
-              </View>
-              <Text style={{fontSize: 13, marginLeft: 5}}>155 ratings</Text>
-            </View>
           </View>
 
           {/* Location text */}
-          <Text style={{fontSize: 16, color: COLORS.grey}}>
-            {house.location}
+          <Text style={{ fontSize: 16, color: COLORS.grey }}>
+            {house.propertyAddress}
           </Text>
 
           {/* Facilities container */}
-          <View style={{flexDirection: 'row', marginTop: 20}}>
+          <View style={{ flexDirection: 'row', marginTop: 20 }}>
             <View style={style.facility}>
               <Icon name="hotel" size={18} />
-              <Text style={style.facilityText}>2</Text>
+              <Text style={style.facilityText}>{house.bedrooms}</Text>
             </View>
             <View style={style.facility}>
-              <Icon name="bathtub" size={18} />
-              <Text style={style.facilityText}>2</Text>
+              <Icon name="home" size={18} />
+              <Text style={style.facilityText}>{house.propertyType}</Text>
             </View>
             <View style={style.facility}>
-              <Icon name="aspect-ratio" size={18} />
-              <Text style={style.facilityText}>100m area</Text>
+              <Icon name="person" size={18} />
+              <Text style={style.facilityText}>{house.name}</Text>
+            </View>
+            <View style={style.facility}>
+              <Icon name="countertops" size={18} />
+              <Text style={style.facilityText}>{house.furnitureType}</Text>
             </View>
           </View>
-          <Text style={{marginTop: 20, color: COLORS.grey}}>
-            {house.details}
+          <Text style={{ marginTop: 20, color: COLORS.grey }}>
+            {house.notes}
           </Text>
 
           {/* Interior list */}
           <FlatList
-            contentContainerStyle={{marginTop: 20}}
+            contentContainerStyle={{ marginTop: 20 }}
             horizontal
             showsHorizontalScrollIndicator={false}
             keyExtractor={(_, key) => key.toString()}
             data={house.interiors}
-            renderItem={({item}) => <InteriorCard interior={item} />}
+            renderItem={({ item }) => <InteriorCard interior={item} />}
           />
 
           {/* footer container */}
           <View style={style.footer}>
             <View>
               <Text
-                style={{color: COLORS.blue, fontWeight: 'bold', fontSize: 18}}>
-                $1,500
+                style={{
+                  color: COLORS.blue,
+                  fontWeight: 'bold',
+                  fontSize: 18,
+                }}>
+                ${house.price}
               </Text>
               <Text
-                style={{fontSize: 12, color: COLORS.grey, fontWeight: 'bold'}}>
+                style={{
+                  fontSize: 12,
+                  color: COLORS.grey,
+                  fontWeight: 'bold',
+                }}>
                 Total Price
               </Text>
             </View>
             <View style={style.bookNowBtn}>
-              <Text style={{color: COLORS.white}}>Book Now</Text>
+              <Text style={{ color: COLORS.white }}>Book Now</Text>
             </View>
           </View>
         </View>
@@ -188,9 +202,9 @@ const style = StyleSheet.create({
     borderRadius: 10,
     paddingHorizontal: 20,
   },
-  detailsContainer: {flex: 1, paddingHorizontal: 20, marginTop: 40},
-  facility: {flexDirection: 'row', marginRight: 15},
-  facilityText: {marginLeft: 5, color: COLORS.grey},
+  detailsContainer: { flex: 1, paddingHorizontal: 20, marginTop: 40 },
+  facility: { flexDirection: 'row', marginRight: 15 },
+  facilityText: { marginLeft: 5, color: COLORS.grey },
 });
 
 export default DetailsScreen;

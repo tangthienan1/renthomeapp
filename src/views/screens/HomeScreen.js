@@ -1,3 +1,5 @@
+/* eslint-disable eqeqeq */
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {
   SafeAreaView,
@@ -14,12 +16,14 @@ import {
 } from 'react-native';
 import COLORS from '../../consts/colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-const {width} = Dimensions.get('screen');
-import houses from '../../consts/houses';
-const HomeScreen = ({navigation}) => {
+import { useSelector } from 'react-redux';
+const { width } = Dimensions.get('screen');
+const HomeScreen = ({ navigation }) => {
+  const houses = useSelector(state => state.houses);
+  console.log('houses', houses);
   const optionsList = [
-    {title: 'Buy a Home', img: require('../../assets/house1.jpg')},
-    {title: 'Rent a Home', img: require('../../assets/house2.jpg')},
+    { title: 'Buy a Home', img: require('../../assets/house1.jpg') },
+    { title: 'Rent a Home', img: require('../../assets/house2.jpg') },
   ];
   const categoryList = ['Popular', 'Recommended', 'Nearest'];
 
@@ -53,7 +57,7 @@ const HomeScreen = ({navigation}) => {
             <Image source={option.img} style={style.optionsCardImage} />
 
             {/* Option title */}
-            <Text style={{marginTop: 10, fontSize: 18, fontWeight: 'bold'}}>
+            <Text style={{ marginTop: 10, fontSize: 18, fontWeight: 'bold' }}>
               {option.title}
             </Text>
           </View>
@@ -61,7 +65,7 @@ const HomeScreen = ({navigation}) => {
       </View>
     );
   };
-  const Card = ({house}) => {
+  const Card = ({ house }) => {
     return (
       <Pressable
         activeOpacity={0.8}
@@ -69,7 +73,7 @@ const HomeScreen = ({navigation}) => {
         <View style={style.card}>
           {/* House image */}
           <Image source={house.image} style={style.cardImage} />
-          <View style={{marginTop: 10}}>
+          <View style={{ marginTop: 10 }}>
             {/* Title and price container */}
             <View
               style={{
@@ -77,34 +81,42 @@ const HomeScreen = ({navigation}) => {
                 justifyContent: 'space-between',
                 marginTop: 10,
               }}>
-              <Text style={{fontSize: 16, fontWeight: 'bold'}}>
-                {house.title}
+              <Text style={{ fontSize: 16, fontWeight: 'bold' }}>
+                {house.propertyName}
               </Text>
               <Text
-                style={{fontWeight: 'bold', color: COLORS.blue, fontSize: 16}}>
-                $1,500
+                style={{
+                  fontWeight: 'bold',
+                  color: COLORS.blue,
+                  fontSize: 16,
+                }}>
+                ${house.price}
               </Text>
             </View>
 
             {/* Location text */}
 
-            <Text style={{color: COLORS.grey, fontSize: 14, marginTop: 5}}>
-              {house.location}
+            <Text style={{ color: COLORS.grey, fontSize: 14, marginTop: 5 }}>
+              {house.propertyAddress}
             </Text>
 
             {/* Facilities container */}
-            <View style={{marginTop: 10, flexDirection: 'row'}}>
+            <View style={{ marginTop: 10, flexDirection: 'row' }}>
               <View style={style.facility}>
                 <Icon name="hotel" size={18} />
-                <Text style={style.facilityText}>2</Text>
+                <Text style={style.facilityText}>{house.bedrooms}</Text>
               </View>
               <View style={style.facility}>
-                <Icon name="bathtub" size={18} />
-                <Text style={style.facilityText}>2</Text>
+                <Icon name="home" size={18} />
+                <Text style={style.facilityText}>{house.propertyType}</Text>
               </View>
               <View style={style.facility}>
-                <Icon name="aspect-ratio" size={18} />
-                <Text style={style.facilityText}>100m</Text>
+                <Icon name="person" size={18} />
+                <Text style={style.facilityText}>{house.name}</Text>
+              </View>
+              <View style={style.facility}>
+                <Icon name="countertops" size={18} />
+                <Text style={style.facilityText}>{house.furnitureType}</Text>
               </View>
             </View>
           </View>
@@ -113,7 +125,7 @@ const HomeScreen = ({navigation}) => {
     );
   };
   return (
-    <SafeAreaView style={{backgroundColor: COLORS.white, flex: 1}}>
+    <SafeAreaView style={{ backgroundColor: COLORS.white, flex: 1 }}>
       {/* Customise status bar */}
       <StatusBar
         translucent={false}
@@ -123,9 +135,10 @@ const HomeScreen = ({navigation}) => {
       {/* Header container */}
       <View style={style.header}>
         <View>
-          <Text style={{color: COLORS.grey}}>Location</Text>
-          <Text style={{color: COLORS.dark, fontSize: 20, fontWeight: 'bold'}}>
-            Canada
+          <Text style={{ color: COLORS.grey }}>Location</Text>
+          <Text
+            style={{ color: COLORS.dark, fontSize: 20, fontWeight: 'bold' }}>
+            Viet Nam
           </Text>
         </View>
         <Image
@@ -161,10 +174,10 @@ const HomeScreen = ({navigation}) => {
         <FlatList
           snapToInterval={width - 20}
           showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{paddingLeft: 20, paddingVertical: 20}}
+          contentContainerStyle={{ paddingLeft: 20, paddingVertical: 20 }}
           horizontal
           data={houses}
-          renderItem={({item}) => <Card house={item} />}
+          renderItem={({ item }) => <Card house={item} />}
         />
       </ScrollView>
     </SafeAreaView>
@@ -253,7 +266,7 @@ const style = StyleSheet.create({
     height: 120,
     borderRadius: 15,
   },
-  facility: {flexDirection: 'row', marginRight: 15},
-  facilityText: {marginLeft: 5, color: COLORS.grey},
+  facility: { flexDirection: 'row', marginRight: 15 },
+  facilityText: { marginLeft: 5, color: COLORS.grey },
 });
 export default HomeScreen;

@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {
   StatusBar,
@@ -9,9 +10,9 @@ import {
   Pressable,
 } from 'react-native';
 import COLORS from '../../consts/colors';
-const OnBoardScreen = ({navigation}) => {
+const OnBoardScreen = ({ navigation }) => {
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
       <StatusBar translucent backgroundColor={COLORS.tranparent} />
 
       {/* Onboarding Image */}
@@ -20,15 +21,8 @@ const OnBoardScreen = ({navigation}) => {
         style={style.image}
       />
 
-      {/* Indicator container */}
-      <View style={style.indicatorContainer}>
-        <View style={style.indicator} />
-        <View style={style.indicator} />
-        <View style={[style.indicator, style.indicatorActive]} />
-      </View>
-
       {/* Title and text container */}
-      <View style={{paddingHorizontal: 20, paddingTop: 20}}>
+      <View style={{ paddingHorizontal: 20, paddingTop: 20 }}>
         {/* Title container */}
         <View>
           <Text style={style.title}>Find your</Text>
@@ -36,26 +30,25 @@ const OnBoardScreen = ({navigation}) => {
         </View>
 
         {/* Text container */}
-        <View style={{marginTop: 10}}>
+        <View style={{ marginTop: 10 }}>
           <Text style={style.textStyle}>
-            Schedule visits in just a few clicks
+            Thien An will help you find your home
           </Text>
-          <Text style={style.textStyle}>visit in just a few clicks</Text>
         </View>
       </View>
 
       {/* Button container */}
-      <View
-        style={{
-          flex: 1,
-          justifyContent: 'flex-end',
-          paddingBottom: 40,
-        }}>
+      <View style={style.btnContainer}>
         {/* button */}
-        <Pressable onPress={() => navigation.navigate('HomeScreen')}>
-          <View style={style.btn}>
-            <Text style={{color: 'white'}}>Get Started</Text>
-          </View>
+        <Pressable
+          style={style.btn}
+          onPress={() => navigation.navigate('HomeScreen')}>
+          <Text style={{ color: 'white' }}>Get Started</Text>
+        </Pressable>
+        <Pressable
+          style={style.btn}
+          onPress={() => navigation.navigate('Registration')}>
+          <Text style={{ color: 'white' }}>Add</Text>
         </Pressable>
       </View>
     </SafeAreaView>
@@ -74,25 +67,22 @@ const style = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
   },
-  indicator: {
-    height: 3,
-    width: 30,
-    backgroundColor: COLORS.grey,
-    borderRadius: 5,
-    marginHorizontal: 5,
-  },
-  indicatorActive: {
-    backgroundColor: COLORS.dark,
+  btnContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    paddingBottom: 40,
   },
   btn: {
     height: 60,
-    marginHorizontal: 20,
+    width: '40%',
+    margin: 20,
     backgroundColor: 'black',
     borderRadius: 15,
     justifyContent: 'center',
     alignItems: 'center',
+    marginBottom: 2,
   },
-  title: {fontSize: 32, fontWeight: 'bold'},
-  textStyle: {fontSize: 16, color: COLORS.grey},
+  title: { fontSize: 32, fontWeight: 'bold' },
+  textStyle: { fontSize: 16, color: COLORS.grey },
 });
 export default OnBoardScreen;
