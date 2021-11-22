@@ -15,8 +15,8 @@ import {
 import { useDispatch } from 'react-redux';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import COLORS from '../../consts/colors';
 import { removeHouse } from '../../store/houseSlice';
+import { COLORS } from '../../consts/colors';
 const { width } = Dimensions.get('screen');
 const DetailsScreen = ({ navigation, route }) => {
   const house = route.params;

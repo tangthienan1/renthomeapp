@@ -14,24 +14,21 @@ import {
   Pressable,
   ScrollView,
 } from 'react-native';
-import COLORS from '../../consts/colors';
+import { CATEGORY_LIST, COLORS, OPTIONS_LIST } from '../../consts/colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { useSelector } from 'react-redux';
 const { width } = Dimensions.get('screen');
-const HomeScreen = ({ navigation }) => {
+const HomeScreen = ({ navigation, route }) => {
   const houses = useSelector(state => state.houses);
   console.log('houses', houses);
-  const optionsList = [
-    { title: 'Buy a Home', img: require('../../assets/house1.jpg') },
-    { title: 'Rent a Home', img: require('../../assets/house2.jpg') },
-  ];
-  const categoryList = ['Popular', 'Recommended', 'Nearest'];
+
+
 
   const ListCategories = () => {
     const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState(0);
     return (
       <View style={style.categoryListContainer}>
-        {categoryList.map((category, index) => (
+        {CATEGORY_LIST.map((category, index) => (
           <Pressable
             key={index}
             onPress={() => setSelectedCategoryIndex(index)}>
@@ -51,7 +48,7 @@ const HomeScreen = ({ navigation }) => {
   const ListOptions = () => {
     return (
       <View style={style.optionListsContainer}>
-        {optionsList.map((option, index) => (
+        {OPTIONS_LIST.map((option, index) => (
           <View style={style.optionsCard} key={index}>
             {/* House image */}
             <Image source={option.img} style={style.optionsCardImage} />
@@ -177,7 +174,7 @@ const HomeScreen = ({ navigation }) => {
           contentContainerStyle={{ paddingLeft: 20, paddingVertical: 20 }}
           horizontal
           data={houses}
-          renderItem={({ item }) => <Card house={item} />}
+          renderItem={({ item, index }) => <Card house={item} key={index} />}
         />
       </ScrollView>
     </SafeAreaView>

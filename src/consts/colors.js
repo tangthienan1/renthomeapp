@@ -7,5 +7,9 @@ const COLORS = {
   red: 'red',
   tranparent: 'rgba(0,0,0,0)',
 };
-
-export default COLORS;
+const CATEGORY_LIST = ['Popular', 'Recommended', 'Nearest'];
+const OPTIONS_LIST = [
+  { title: 'Buy a Home', img: require('../assets/house2.jpg') },
+  { title: 'Rent a Home', img: require('../assets/house2.jpg') },
+];
+export { COLORS, CATEGORY_LIST, OPTIONS_LIST };

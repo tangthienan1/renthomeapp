@@ -14,12 +14,12 @@ import {
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useDispatch } from 'react-redux';
-import COLORS from '../../consts/colors';
 import { addHouse } from '../../store/houseSlice';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
+import { COLORS } from '../../consts/colors';
 
 const Registration = ({ navigation }) => {
-  const [imageUri, setImageUri] = useState('');
+  const [imageUri, setImageUri] = useState(null);
   const dispatch = useDispatch();
   const {
     control,
@@ -27,9 +27,11 @@ const Registration = ({ navigation }) => {
     formState: { errors },
   } = useForm();
   const onSubmit = data => {
-    console.log(data);
-    dispatch(addHouse(data));
-    navigation.navigate('HomeScreen');
+    console.log('data', data);
+    const newData = { ...data, image: imageUri }
+    console.log('data', newData);
+    dispatch(addHouse(newData));
+    navigation.navigate('HomeScreen', imageUri);
   };
   const today = new Date();
   const date =
@@ -52,7 +54,8 @@ const Registration = ({ navigation }) => {
       } else if (response.customButton) {
         console.log('user tapped custom button: ', response.customButton);
       } else {
-        const source = {uri: response.assets[0].uri };
+        const source = { uri: response.assets[0].uri };
+        console.log('sourceUri', source);
         setImageUri(source);
       }
     });
@@ -76,6 +79,7 @@ const Registration = ({ navigation }) => {
         console.log('user tapped custom button: ', response.customButton);
       } else {
         const source = { uri: 'data:image/jpeg;base64,' + response.base64 };
+        console.log('sourceUri', source);
         setImageUri(source);
       }
     });
@@ -317,7 +321,7 @@ const Registration = ({ navigation }) => {
             }}>
             {/* button */}
             <Pressable onPress={handleSubmit(onSubmit)}>
-            {/* <Pressable onPress={() => navigation.navigate('HomeScreen')}> */}
+              {/* <Pressable onPress={() => navigation.navigate('HomeScreen')}> */}
               <View style={style.btn}>
                 <Text style={{ color: 'white' }}>Add</Text>
               </View>

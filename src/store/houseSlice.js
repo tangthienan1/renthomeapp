@@ -83,7 +83,7 @@ const house = createSlice({
   reducers: {
     addHouse: (state, action) => {
       const newState = {
-        id: state[state.length].id++,
+        id: state.length++,
         ...action.payload,
       };
       console.log('newState', newState);
@@ -96,9 +96,7 @@ const house = createSlice({
   },
 });
 
-//Reducer, Action
+
 const { reducer, actions } = house;
-//Export all action
 export const { addHouse, removeHouse } = actions;
-//Export Reducer
 export default reducer;

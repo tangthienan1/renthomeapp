@@ -9,7 +9,7 @@ import {
   Image,
   Pressable,
 } from 'react-native';
-import COLORS from '../../consts/colors';
+import { COLORS } from '../../consts/colors';
 const OnBoardScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
@@ -42,7 +42,10 @@ const OnBoardScreen = ({ navigation }) => {
         {/* button */}
         <Pressable
           style={style.btn}
-          onPress={() => navigation.navigate('HomeScreen')}>
+          onPress={() => {
+            console.log('get started')
+            navigation.navigate('HomeScreen')
+          }}>
           <Text style={{ color: 'white' }}>Get Started</Text>
         </Pressable>
         <Pressable
