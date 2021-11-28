@@ -20,7 +20,7 @@ import { COLORS } from '../../consts/colors';
 const { width } = Dimensions.get('screen');
 const DetailsScreen = ({ navigation, route }) => {
   const house = route.params;
-  console.log('houseDetal', house);
+  console.log('houseDetail', house);
   const dispatch = useDispatch();
   const InteriorCard = ({ interior }) => {
     return <Image source={interior} style={style.interiorImage} />;

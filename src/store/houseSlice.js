@@ -82,7 +82,15 @@ const house = createSlice({
   initialState,
   reducers: {
     addHouse: (state, action) => {
-      state.push(action.payload);
+      const newHouse = {
+        ...action.payload,
+        interiors: [
+          require('../assets/interior1.jpg'),
+          require('../assets/interior2.jpg'),
+          require('../assets/interior3.jpg'),
+        ],
+      }
+      state.push(newHouse);
     },
     removeHouse: (state, action) => {
       const newState = state.filter(house => house.id !== action.payload);

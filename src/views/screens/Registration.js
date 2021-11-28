@@ -287,29 +287,31 @@ const Registration = ({ navigation }) => {
           <View style={style.imageWrapper}>
             <Text style={style.inputLabel}>image:</Text>
             <View style={style.imgBtn}>
-              <Button
-                title={'Open Camera'}
-                onPress={() => {
-                  openCamera();
+              <Pressable onPress={() => {
+                openCamera();
+              }}>
+                <View style={style.camBtn}>
+                  <Text style={{ color: 'white' }}>Open Camera</Text>
+                </View>
+              </Pressable>
+
+              <Pressable onPress={() => {
+                openGallery();
+              }}>
+                <View style={style.camBtn}>
+                  <Text style={{ color: 'white' }}>Open Gallary</Text>
+                </View>
+              </Pressable>
+              <Image
+                source={imageUri ? imageUri : require('../../assets/empty.png')}
+                style={{
+                  marginVertical: 20,
+                  height: 100,
+                  width: '100%',
                 }}
               />
+
             </View>
-            <Button
-              title={'Open Gallary'}
-              onPress={() => {
-                openGallery();
-              }}
-            />
-            <Image
-              source={imageUri}
-              style={{
-                marginVertical: 20,
-                height: 100,
-                width: '100%',
-                borderWidth: 1,
-                borderColor: 'black',
-              }}
-            />
           </View>
 
           {/* Submit Button */}
@@ -373,5 +375,14 @@ const style = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
   },
+  camBtn: {
+    marginVertical: 5,
+    height: 60,
+    backgroundColor: 'black',
+    borderRadius: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+  }
 });
 export default Registration;

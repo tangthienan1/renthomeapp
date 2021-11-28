@@ -2,21 +2,13 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {
-  SafeAreaView,
-  View,
-  StatusBar,
-  Text,
-  TextInput,
-  FlatList,
-  Dimensions,
-  StyleSheet,
-  Image,
-  Pressable,
-  ScrollView,
+  Dimensions, FlatList, Image,
+  Pressable, SafeAreaView, ScrollView, StatusBar, StyleSheet, Text,
+  TextInput, View
 } from 'react-native';
-import { CATEGORY_LIST, COLORS, OPTIONS_LIST } from '../../consts/colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { useSelector } from 'react-redux';
+import { CATEGORY_LIST, COLORS } from '../../consts/colors';
 const { width } = Dimensions.get('screen');
 const HomeScreen = ({ navigation, route }) => {
   const houses = useSelector(state => state.houses);
@@ -45,31 +37,16 @@ const HomeScreen = ({ navigation, route }) => {
     );
   };
 
-  const ListOptions = () => {
-    return (
-      <View style={style.optionListsContainer}>
-        {OPTIONS_LIST.map((option, index) => (
-          <View style={style.optionsCard} key={index}>
-            {/* House image */}
-            <Image source={option.img} style={style.optionsCardImage} />
 
-            {/* Option title */}
-            <Text style={{ marginTop: 10, fontSize: 18, fontWeight: 'bold' }}>
-              {option.title}
-            </Text>
-          </View>
-        ))}
-      </View>
-    );
-  };
   const Card = ({ house }) => {
     return (
       <Pressable
+        style={style.cardWrapper}
         activeOpacity={0.8}
         onPress={() => navigation.navigate('DetailsScreen', house)}>
         <View style={style.card}>
           {/* House image */}
-          <Image source={house.image} style={style.cardImage} />
+          <Image source={house.image ? house.image : require('../../assets/empty.png')} style={style.cardImage} />
           <View style={{ marginTop: 10 }}>
             {/* Title and price container */}
             <View
@@ -161,9 +138,6 @@ const HomeScreen = ({ navigation, route }) => {
           </View>
         </View>
 
-        {/* Render list options */}
-        <ListOptions />
-
         {/* Render categories */}
         <ListCategories />
 
@@ -172,7 +146,6 @@ const HomeScreen = ({ navigation, route }) => {
           snapToInterval={width - 20}
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{ paddingLeft: 20, paddingVertical: 20 }}
-          horizontal
           data={houses}
           renderItem={({ item, index }) => <Card house={item} key={index} />}
         />
@@ -248,6 +221,9 @@ const style = StyleSheet.create({
     justifyContent: 'space-between',
     marginTop: 40,
     paddingHorizontal: 40,
+  },
+  cardWrapper: {
+    marginVertical: 10,
   },
   card: {
     height: 250,

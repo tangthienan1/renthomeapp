@@ -8,6 +8,7 @@ import DetailsScreen from './src/views/screens/DetailsScreen';
 import Registration from './src/views/screens/Registration';
 import { Provider } from 'react-redux';
 import store from './src/store/store';
+import UpdateScreen from './src/views/screens/DetailsScreen';
 
 const Stack = createStackNavigator();
 
@@ -20,6 +21,7 @@ const App = () => {
           <Stack.Screen name="Registration" component={Registration} />
           <Stack.Screen name="HomeScreen" component={HomeScreen} />
           <Stack.Screen name="DetailsScreen" component={DetailsScreen} />
+          <Stack.Screen name="UpdateScreen" component={UpdateScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
