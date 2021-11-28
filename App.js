@@ -8,7 +8,7 @@ import DetailsScreen from './src/views/screens/DetailsScreen';
 import Registration from './src/views/screens/Registration';
 import { Provider } from 'react-redux';
 import store from './src/store/store';
-import UpdateScreen from './src/views/screens/DetailsScreen';
+import UpdateScreen from './src/views/screens/UpdateScreen';
 
 const Stack = createStackNavigator();
 

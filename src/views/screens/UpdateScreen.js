@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import {
-    Button,
     Image,
     Pressable,
     SafeAreaView,
@@ -10,13 +9,13 @@ import {
     StyleSheet,
     Text,
     TextInput,
-    View,
+    View
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { useDispatch } from 'react-redux';
-import { addHouse } from '../../store/houseSlice';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
+import { useDispatch } from 'react-redux';
 import { COLORS } from '../../consts/colors';
+import { updateHouse } from '../../store/houseSlice';
 
 const UpdateScreen = ({ navigation, route }) => {
     const house = route.params;
@@ -28,11 +27,10 @@ const UpdateScreen = ({ navigation, route }) => {
         formState: { errors },
     } = useForm();
     const onSubmit = data => {
-        console.log('data', data);
-        const newData = { ...data, id: Math.trunc(Math.random() * 100000), image: imageUri }
-        console.log('data', newData);
-        dispatch(addHouse(newData));
-        navigation.navigate('HomeScreen', imageUri);
+        const newData = { ...data, id: house.id, image: imageUri }
+        console.log('updatedData', JSON.stringify(newData));
+        dispatch(updateHouse(newData));
+        navigation.navigate('HomeScreen');
     };
     const today = new Date();
     const date =
@@ -160,7 +158,7 @@ const UpdateScreen = ({ navigation, route }) => {
                             </>
                         )}
                         name="propertyType"
-                        defaultValue={house.Type}
+                        defaultValue={house.propertyType}
                     />
                     {errors.propertyType && (
                         <Text style={style.formError}>This is required.</Text>
@@ -335,7 +333,7 @@ const UpdateScreen = ({ navigation, route }) => {
                         <Pressable onPress={handleSubmit(onSubmit)}>
                             {/* <Pressable onPress={() => navigation.navigate('HomeScreen')}> */}
                             <View style={style.btn}>
-                                <Text style={{ color: 'white' }}>Add</Text>
+                                <Text style={{ color: 'white' }}>Update</Text>
                             </View>
                         </Pressable>
                     </View>

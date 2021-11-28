@@ -12,6 +12,7 @@ import {
   ScrollView,
   Pressable,
 } from 'react-native';
+
 import { useDispatch } from 'react-redux';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -37,14 +38,12 @@ const DetailsScreen = ({ navigation, route }) => {
         {/* House image */}
 
         <View style={style.backgroundImageContainer}>
-          <ImageBackground style={style.backgroundImage} source={house.image}>
+          <ImageBackground style={style.backgroundImage} source={house.image ? house.image : require('../../assets/empty.png')}>
             <View style={style.header}>
               <View style={style.headerBtn}>
-                <Icon
-                  name="arrow-back-ios"
-                  size={20}
-                  onPress={navigation.goBack}
-                />
+                <Pressable onPress={() => navigation.navigate('UpdateScreen', house)}>
+                  <Icon name="tune" size={20} />
+                </Pressable>
               </View>
               <View style={style.headerBtn}>
                 <Pressable onPress={() => handleDelete(house.id)}>

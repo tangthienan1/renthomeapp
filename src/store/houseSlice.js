@@ -3,13 +3,13 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = [
   {
-    id: 1,
-    propertyName: 'Vinhome',
+    id: 1234,
+    propertyName: 'SenHouse',
     propertyAddress: 'Binh Thanh',
     propertyType: 'Apartment',
-    bedrooms: 1,
+    bedrooms: '1',
     date: '28-10-2021',
-    price: 1000,
+    price: '1000',
     furnitureType: 'Furnished',
     name: 'Andy tang',
     notes: 'Nha moi xay...',
@@ -21,13 +21,13 @@ const initialState = [
     ],
   },
   {
-    id: 2,
+    id: 22421,
     propertyName: 'Vinhome',
     propertyAddress: 'Thu duc',
     propertyType: 'Apartment',
-    bedrooms: 2,
+    bedrooms: '2',
     date: '28-10-2021',
-    price: 1500,
+    price: '1500',
     furnitureType: 'Furnished',
     name: 'Thien An',
     notes: 'Nha xay 2 nam roi ne...',
@@ -39,13 +39,13 @@ const initialState = [
     ],
   },
   {
-    id: 3,
+    id: 14333,
     propertyName: 'Lake View',
     propertyAddress: 'Quan 2',
     propertyType: 'House',
-    bedrooms: 2,
+    bedrooms: '2',
     date: '28-10-2021',
-    price: 1000,
+    price: '1000',
     furnitureType: 'Furnished',
     name: 'Thien An',
     notes: 'Gan sala nen vui...',
@@ -57,13 +57,13 @@ const initialState = [
     ],
   },
   {
-    id: 4,
+    id: 44213,
     propertyName: 'Lake view',
     propertyAddress: 'Quan 2',
     propertyType: 'House',
-    bedrooms: 3,
+    bedrooms: '3',
     date: '28-10-2021',
-    price: 1500,
+    price: '1500',
     furnitureType: 'Furnished',
     name: 'Thien An',
     notes: 'Cung vi gan sala nen vui...',
@@ -97,10 +97,16 @@ const house = createSlice({
       console.log('state', newState)
       return newState
     },
+    updateHouse: (state, action) => {
+      const houseIndex = state.findIndex(house => house.id === action.payload.id);
+      if (houseIndex >= 0) {
+        state[houseIndex] = action.payload
+      }
+    }
   },
 });
 
 
 const { reducer, actions } = house;
-export const { addHouse, removeHouse } = actions;
+export const { addHouse, removeHouse, updateHouse } = actions;
 export default reducer;
