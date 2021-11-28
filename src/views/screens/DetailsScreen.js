@@ -28,7 +28,7 @@ const DetailsScreen = ({ navigation, route }) => {
   const handleDelete = id => {
     const action = removeHouse(id);
     console.log('action', action);
-    dispatch(removeHouse(action));
+    dispatch(removeHouse(id));
     navigation.goBack();
   };
   return (

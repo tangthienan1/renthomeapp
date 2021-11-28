@@ -28,7 +28,7 @@ const Registration = ({ navigation }) => {
   } = useForm();
   const onSubmit = data => {
     console.log('data', data);
-    const newData = { ...data, image: imageUri }
+    const newData = { ...data, id: Math.trunc(Math.random() * 100000), image: imageUri }
     console.log('data', newData);
     dispatch(addHouse(newData));
     navigation.navigate('HomeScreen', imageUri);

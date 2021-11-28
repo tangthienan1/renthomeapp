@@ -20,7 +20,7 @@ import { useSelector } from 'react-redux';
 const { width } = Dimensions.get('screen');
 const HomeScreen = ({ navigation, route }) => {
   const houses = useSelector(state => state.houses);
-  console.log('houses', houses);
+  console.log('houses', JSON.stringify(houses));
 
 
 

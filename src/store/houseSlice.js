@@ -82,16 +82,12 @@ const house = createSlice({
   initialState,
   reducers: {
     addHouse: (state, action) => {
-      const newState = {
-        id: state.length++,
-        ...action.payload,
-      };
-      console.log('newState', newState);
-      state.push(newState);
+      state.push(action.payload);
     },
     removeHouse: (state, action) => {
-      state.filter(house => house.id !== action.payload);
-      console.log('state', state)
+      const newState = state.filter(house => house.id !== action.payload);
+      console.log('state', newState)
+      return newState
     },
   },
 });
