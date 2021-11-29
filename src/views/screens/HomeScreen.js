@@ -1,6 +1,6 @@
 /* eslint-disable eqeqeq */
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Dimensions, FlatList, Image,
   Pressable, SafeAreaView, ScrollView, StatusBar, StyleSheet, Text,
@@ -10,12 +10,12 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import { useSelector } from 'react-redux';
 import { CATEGORY_LIST, COLORS } from '../../consts/colors';
 const { width } = Dimensions.get('screen');
-const HomeScreen = ({ navigation, route }) => {
-  const houses = useSelector(state => state.houses);
-  console.log('houses', JSON.stringify(houses));
-
-
-
+const HomeScreen = ({ navigation }) => {
+  const houseList = useSelector(state => state.houses)
+  const [houses, setHouses] = useState(houseList);
+  const handleOnChange = (text) => {
+    setHouses(houseList.filter(house => house.propertyName.includes(text) || house.price.includes(text)))
+  }
   const ListCategories = () => {
     const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState(0);
     return (
@@ -130,12 +130,10 @@ const HomeScreen = ({ navigation, route }) => {
           }}>
           <View style={style.searchInputContainer}>
             <Icon name="search" color={COLORS.grey} size={25} />
-            <TextInput placeholder="Search address, city, location" />
+            <TextInput placeholder="Enter property name or price" onChangeText={text => handleOnChange(text)}
+            />
           </View>
 
-          <View style={style.sortBtn}>
-            <Icon name="tune" color={COLORS.white} size={25} />
-          </View>
         </View>
 
         {/* Render categories */}

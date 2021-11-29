@@ -11,6 +11,7 @@ import {
     TextInput,
     View
 } from 'react-native';
+import DatePicker from 'react-native-date-picker';
 import { ScrollView } from 'react-native-gesture-handler';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { useDispatch } from 'react-redux';
@@ -20,6 +21,8 @@ import { updateHouse } from '../../store/houseSlice';
 const UpdateScreen = ({ navigation, route }) => {
     const house = route.params;
     const [imageUri, setImageUri] = useState(house.image);
+    const [open, setOpen] = useState(false)
+
     const dispatch = useDispatch();
     const {
         control,
@@ -32,9 +35,6 @@ const UpdateScreen = ({ navigation, route }) => {
         dispatch(updateHouse(newData));
         navigation.navigate('HomeScreen');
     };
-    const today = new Date();
-    const date =
-        today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear();
     const openCamera = () => {
         let options = {
             storageOption: {
@@ -194,17 +194,31 @@ const UpdateScreen = ({ navigation, route }) => {
                         render={({ field: { onChange, onBlur, value } }) => (
                             <>
                                 <Text style={style.inputLabel}>Date:</Text>
-                                <TextInput
-                                    editable={false}
-                                    style={style.input}
-                                    onBlur={onBlur}
-                                    onChangeText={onChange}
-                                    value={value}
+                                <Pressable onPress={() => setOpen(true)}>
+                                    <TextInput
+                                        editable={false}
+                                        style={style.input}
+                                        onBlur={onBlur}
+                                        value={value}
+                                    />
+                                </Pressable>
+                                <DatePicker
+                                    mode={'date'}
+                                    modal
+                                    open={open}
+                                    date={new Date()}
+                                    onConfirm={(date) => {
+                                        setOpen(false)
+                                        onChange(moment(date).format("DD-MM-YYYY"))
+                                    }}
+                                    onCancel={() => {
+                                        setOpen(false)
+                                    }}
+
                                 />
                             </>
                         )}
                         name="date"
-                        defaultValue={date}
                         defaultValue={house.date}
                     />
                     {errors.date && (

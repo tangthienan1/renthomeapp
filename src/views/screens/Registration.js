@@ -17,9 +17,14 @@ import { useDispatch } from 'react-redux';
 import { addHouse } from '../../store/houseSlice';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { COLORS } from '../../consts/colors';
+import DatePicker from 'react-native-date-picker';
+import moment from 'moment';
 
 const Registration = ({ navigation }) => {
   const [imageUri, setImageUri] = useState(null);
+  const [open, setOpen] = useState(false)
+
+
   const dispatch = useDispatch();
   const {
     control,
@@ -33,9 +38,7 @@ const Registration = ({ navigation }) => {
     dispatch(addHouse(newData));
     navigation.navigate('HomeScreen', imageUri);
   };
-  const today = new Date();
-  const date =
-    today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear();
+
   const openCamera = () => {
     let options = {
       storageOption: {
@@ -183,6 +186,7 @@ const Registration = ({ navigation }) => {
           {errors.bedrooms && (
             <Text style={style.formError}>This is required.</Text>
           )}
+
           <Controller
             control={control}
             rules={{
@@ -191,17 +195,30 @@ const Registration = ({ navigation }) => {
             render={({ field: { onChange, onBlur, value } }) => (
               <>
                 <Text style={style.inputLabel}>Date:</Text>
-                <TextInput
-                  editable={false}
-                  style={style.input}
-                  onBlur={onBlur}
-                  onChangeText={onChange}
-                  value={value}
+                <Pressable onPress={() => setOpen(true)}>
+                  <TextInput
+                    editable={false}
+                    style={style.input}
+                    onBlur={onBlur}
+                    value={value}
+                  />
+                </Pressable>
+                <DatePicker
+                  mode={'date'}
+                  modal
+                  open={open}
+                  date={new Date()}
+                  onConfirm={(date) => {
+                    setOpen(false)
+                    onChange(moment(date).format("DD-MM-YYYY"))
+                  }}
+                  onCancel={() => {
+                    setOpen(false)
+                  }}
                 />
               </>
             )}
             name="date"
-            defaultValue={date}
           />
           {errors.date && (
             <Text style={style.formError}>This is required.</Text>

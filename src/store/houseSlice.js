@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = [
   {
-    id: 1234,
+    id: 12342,
     propertyName: 'SenHouse',
     propertyAddress: 'Binh Thanh',
     propertyType: 'Apartment',
